@@ -1,0 +1,6 @@
+<!-- vim: set ft=mkd ts=2 sw=2 tw=80 spell spelllang=en : -->
+
+jsonxx is a C++ library for parsing JSON data.
+
+Patches to fix bugs or TODO items are more than welcome.
+
