@@ -22,4 +22,5 @@ tags
 /m4/
 /Makefile.in
 /Makefile
+/src/libjsonxx.la
 
