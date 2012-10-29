@@ -1,6 +1,6 @@
 /* vim: set et fdm=syntax sts=4 sw=4 ts=4 : */
 /**
- * Copyright © 2010 Saleem Abdulrasool <compnerd@compnerd.org>.
+ * Copyright © 2010,2012 Saleem Abdulrasool <compnerd@compnerd.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -28,8 +28,8 @@
  * OF SUCH DAMAGE.
  **/
 
-#ifndef jsonxx_hh
-#define jsonxx_hh
+#ifndef jsonxx_jsonxx_hh_
+#define jsonxx_jsonxx_hh_
 
 #include <map>
 #include <string>
@@ -37,120 +37,111 @@
 #include <cassert>
 #include <iostream>
 
-namespace jsonxx
-{
-    class value;
+namespace jsonxx {
+class value;
 
-    struct null { };
-    typedef bool boolean;
-    typedef double number;
-    typedef std::string string;
-    typedef std::vector<value> array;
-    typedef std::map<std::string, value> object;
+struct null { };
+typedef bool boolean;
+typedef double number;
+typedef std::string string;
+typedef std::vector<value> array;
+typedef std::map<std::string, value> object;
 
-    class value
-    {
-        friend void parse(std::istream &, value &);
+class value {
+  friend void parse(std::istream&, value&);
 
-        private:
-            enum value_type
-            {
-                invalid,
-                string,
-                number,
-                object,
-                array,
-                boolean,
-                null,
-            };
+  public:
+    template <typename type_>
+    bool is() const;
 
-            jsonxx::string  _string;
-            jsonxx::number  _number;
-            jsonxx::object  _object;
-            jsonxx::array   _array;
-            jsonxx::boolean _boolean;
-            jsonxx::null    _null;
+    template <typename type_>
+    type_& as();
 
-            value_type      _type;
-
-        public:
-            template <typename type_>
-            bool is(void) const;
-
-            template <typename type_>
-            type_ & as(void);
+  private:
+    enum value_type {
+        invalid,
+        string,
+        number,
+        object,
+        array,
+        boolean,
+        null,
     };
 
-    template <>
-    inline bool value::is<jsonxx::string>(void) const { return _type == value::string; }
+    jsonxx::string string_;
+    jsonxx::number number_;
+    jsonxx::object object_;
+    jsonxx::array array_;
+    jsonxx::boolean boolean_;
+    jsonxx::null null_;
 
-    template <>
-    inline bool value::is<jsonxx::number>(void) const { return _type == value::number; }
+    value_type type_;
+};
 
-    template <>
-    inline bool value::is<jsonxx::object>(void) const { return _type == value::object; }
+template <>
+inline bool value::is<string>() const { return type_ == value::string; }
 
-    template <>
-    inline bool value::is<jsonxx::array>(void) const { return _type == value::array; }
+template <>
+inline bool value::is<number>() const { return type_ == value::number; }
 
-    template <>
-    inline bool value::is<jsonxx::boolean>(void) const { return _type == value::boolean; }
+template <>
+inline bool value::is<object>() const { return type_ == value::object; }
 
-    template <>
-    inline bool value::is<jsonxx::null>(void) const { return _type == value::null; }
+template <>
+inline bool value::is<array>() const { return type_ == value::array; }
 
-    template <>
-    inline jsonxx::string &
-    value::as<jsonxx::string>(void)
-    {
-        assert(is<jsonxx::string>());
-        return _string;
-    }
+template <>
+inline bool value::is<boolean>() const { return type_ == value::boolean; }
 
-    template <>
-    inline jsonxx::number &
-    value::as<jsonxx::number>(void)
-    {
-        assert(is<jsonxx::number>());
-        return _number;
-    }
+template <>
+inline bool value::is<null>() const { return type_ == value::null; }
 
-    template <>
-    inline jsonxx::object &
-    value::as<jsonxx::object>(void)
-    {
-        assert(is<jsonxx::object>());
-        return _object;
-    }
+template <>
+inline string& value::as<jsonxx::string>() {
+    // TODO(abdulras) throw an exception rather than asserting
+    assert(is<jsonxx::string>());
+    return string_;
+}
 
-    template <>
-    inline jsonxx::array &
-    value::as<jsonxx::array>(void)
-    {
-        assert(is<jsonxx::array>());
-        return _array;
-    }
+template <>
+inline number& value::as<jsonxx::number>() {
+    // TODO(abdulras) throw an exception rather than asserting
+    assert(is<jsonxx::number>());
+    return number_;
+}
 
-    template <>
-    inline jsonxx::boolean &
-    value::as<jsonxx::boolean>(void)
-    {
-        assert(is<jsonxx::boolean>());
-        return _boolean;
-    }
+template <>
+inline object& value::as<jsonxx::object>() {
+    // TODO(abdulras) throw an exception rather than asserting
+    assert(is<jsonxx::object>());
+    return object_;
+}
 
-    template <>
-    inline jsonxx::null &
-    value::as<jsonxx::null>(void)
-    {
-        assert(is<jsonxx::null>());
-        return _null;
-    }
+template <>
+inline array& value::as<jsonxx::array>() {
+    // TODO(abdulras) throw an exception rather than asserting
+    assert(is<jsonxx::array>());
+    return array_;
+}
 
-    bool allow_comments(void);
-    void allow_comments(const bool value);
+template <>
+inline boolean& value::as<jsonxx::boolean>() {
+    // TODO(abdulras) throw an exception rather than asserting
+    assert(is<jsonxx::boolean>());
+    return boolean_;
+}
 
-    void parse(std::istream & stream, value & value);
+template <>
+inline null& value::as<jsonxx::null>() {
+    // TODO(abdulras) throw an exception rather than asserting
+    assert(is<jsonxx::null>());
+    return null_;
+}
+
+bool allow_comments(void);
+void allow_comments(const bool value);
+
+void parse(std::istream& stream, value& value);
 };
 
 #endif
