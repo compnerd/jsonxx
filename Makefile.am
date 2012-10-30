@@ -13,4 +13,8 @@ src_libjsonxx_la_SOURCES = src/jsonxx.cc \
 			   $(NULL)
 
 MAINTAINERCLEANFILES = aclocal.m4 configure Makefile.in
+MAINTAINERCLEANDIRS = config m4
+
+maintainer-clean-local:
+	$(foreach D,$(MAINTAINERCLEANDIRS),rm -rf $(D);)
 
