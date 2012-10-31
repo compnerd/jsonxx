@@ -2,5 +2,13 @@
 
 jsonxx is a C++ library for parsing JSON data.
 
+The primary goals of jsonxx include:
+  * simple interface and implementation
+  * integration with C++ STL interfaces
+  * type safety of the parsed data
+
+Speed is not an explicit goal, however, that is not an excuse for bad
+performance due to inefficient algorithms or data structures.
+
 Patches to fix bugs or TODO items are more than welcome.
 
