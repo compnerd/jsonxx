@@ -1,4 +1,4 @@
-dnl Copyright © 2010,2012 Saleem Abdulrasool <compnerd@compnerd.org>
+dnl Copyright © 2010,2012,2015 Saleem Abdulrasool <compnerd@compnerd.org>
 dnl vim: set sw=4 sts=4 et fdm=marker fmr={{{,}}} :
 
 dnl {{{ program, version
@@ -11,7 +11,7 @@ AM_INIT_AUTOMAKE([1.11.1 subdir-objects dist-xz])
 dnl }}}
 
 dnl {{{ basic toolchain checks
-AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX_11([noext], [mandatory])
 AC_PROG_INSTALL
 
 LT_INIT

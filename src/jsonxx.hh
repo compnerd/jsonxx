@@ -58,7 +58,7 @@ public:
   type_& as();
 
 private:
-  enum value_type {
+  enum class type {
     invalid,
     string,
     number,
@@ -75,37 +75,37 @@ private:
   jsonxx::boolean boolean_;
   jsonxx::null null_;
 
-  value_type type_;
+  type type_;
 };
 
 template <>
 inline bool value::is<string>() const {
-  return type_ == value::string;
+  return type_ == value::type::string;
 }
 
 template <>
 inline bool value::is<number>() const {
-  return type_ == value::number;
+  return type_ == value::type::number;
 }
 
 template <>
 inline bool value::is<object>() const {
-  return type_ == value::object;
+  return type_ == value::type::object;
 }
 
 template <>
 inline bool value::is<array>() const {
-  return type_ == value::array;
+  return type_ == value::type::array;
 }
 
 template <>
 inline bool value::is<boolean>() const {
-  return type_ == value::boolean;
+  return type_ == value::type::boolean;
 }
 
 template <>
 inline bool value::is<null>() const {
-  return type_ == value::null;
+  return type_ == value::type::null;
 }
 
 template <>

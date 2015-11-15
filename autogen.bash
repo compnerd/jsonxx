@@ -46,7 +46,7 @@ fi
 run mkdir -p "${srcdir}/config"
 rm -f config.cache
 run "${LIBTOOLIZE}" --copy --quiet
-run "${ACLOCAL}"
+run "${ACLOCAL}" -I m4
 run "${AUTOCONF}"
 run "${AUTOHEADER}"
 run "${AUTOMAKE}" --add-missing --copy --foreign

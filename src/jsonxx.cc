@@ -303,34 +303,34 @@ void parse(std::istream& stream, value& value) {
   case '{':
     internals::consume_object(stream.unget(), value.object_);
     if (!stream.fail())
-      value.type_ = value::object;
+      value.type_ = value::type::object;
     break;
   case '[':
     internals::consume_array(stream.unget(), value.array_);
     if (!stream.fail())
-      value.type_ = value::array;
+      value.type_ = value::type::array;
     break;
   case '"':
     internals::consume_string(stream.unget(), value.string_);
     if (!stream.fail())
-      value.type_ = value::string;
+      value.type_ = value::type::string;
     break;
   case '-':
   case '0' ... '9':
     internals::consume_number(stream.unget(), value.number_);
     if (!stream.fail())
-      value.type_ = value::number;
+      value.type_ = value::type::number;
     break;
   case 't':
   case 'f':
     internals::consume_boolean(stream.unget(), value.boolean_);
     if (!stream.fail())
-      value.type_ = value::boolean;
+      value.type_ = value::type::boolean;
     break;
   case 'n':
     internals::consume_null(stream.unget(), value.null_);
     if (!stream.fail())
-      value.type_ = value::null;
+      value.type_ = value::type::null;
     break;
   default:
     // throw
